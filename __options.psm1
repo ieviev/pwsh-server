@@ -22,6 +22,12 @@ function lsr {
 Set-Alias -Name 'lsa'  -Value Get-ChildItem
 Set-Alias -Name 'map'  -Value %
 
+function update-pwsh-server {
+    Set-Location ~/.config/powershell
+    git reset --hard
+    git pull
+}
+
 # --- keybinds
 
 function SetupKeybinds() {
