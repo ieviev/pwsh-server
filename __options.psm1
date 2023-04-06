@@ -14,7 +14,7 @@ Set-Alias -Name "ps"    -Value Get-Process
 Set-Alias -Name "kill"  -Value Stop-Process
 function ls() {
     Get-ChildItem $args
-    | Format-Table -Property Name, Size, UnixMode, FullName, Extension -HideTableHeaders
+    | Format-Table -Property Name, Size, UnixMode, FullName, Extension
 }
 function lsr {
     Get-ChildItem -Recurse $args | ForEach-Object{$_.FullName}
@@ -59,7 +59,11 @@ function SetEnvironment(){
 
 SetEnvironment;
 
+# --- load formatting data
 
+Update-TypeData -AppendPath $PSScriptRoot/format-filesize.ps1xml 
+
+# --- some configs
 
 function source([string]$envname){
     ./"$envname"/bin/Activate.ps1
