@@ -7,26 +7,6 @@ function prompt {
     "❯ "
 }
 
-# --- aliases
-
-Set-Alias -Name 'clip'  -Value Set-Clipboard
-Set-Alias -Name "ps"    -Value Get-Process
-Set-Alias -Name "kill"  -Value Stop-Process
-function ls() {
-    Get-ChildItem $args
-    | Select-Object -Property Name, Size, UnixMode, FullName, Extension
-}
-function lsr {
-    Get-ChildItem -Recurse $args | ForEach-Object{$_.FullName}
-}
-Set-Alias -Name 'lsa'  -Value Get-ChildItem
-Set-Alias -Name 'map'  -Value %
-
-function update-pwshserver {
-    Set-Location ~/.config/powershell
-    git reset --hard
-    git pull
-}
 
 # --- keybinds
 
