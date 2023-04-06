@@ -38,7 +38,7 @@ function parseCompletions($command, $arguments) {
 Register-ArgumentCompleter `
     -Native `
     -CommandName @( 
-    "sinfo", "sbatch", "srun", "salloc"
+    "sinfo", "sbatch", "srun", "salloc", "nvidia-smi"
     ) `
     -ScriptBlock {
     param($wordToComplete, [Language.CommandAst] $commandAst, $cursorPosition)

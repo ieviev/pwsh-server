@@ -13,8 +13,14 @@ Set-Alias -Name 'clip'  -Value Set-Clipboard
 Set-Alias -Name "ps"    -Value Get-Process
 Set-Alias -Name "kill"  -Value Stop-Process
 function ls() {
-    Get-ChildItem | Select-Object -Property Name, Size, UnixMode, FullName 
+    Get-ChildItem $args
+    | Format-Table -Property Name, Size, UnixMode, FullName, Extension -HideTableHeaders
 }
+function lsr {
+    Get-ChildItem -Recurse $args | ForEach-Object{$_.FullName}
+}
+Set-Alias -Name 'lsa'  -Value Get-ChildItem
+Set-Alias -Name 'map'  -Value %
 
 # --- keybinds
 
@@ -47,3 +53,9 @@ function SetEnvironment(){
 
 SetEnvironment;
 
+
+
+function source([string]$envname){
+    ./"$envname"/bin/Activate.ps1
+}
+$PsCompleteSettings.ForceClearBeforeUse = $true;
