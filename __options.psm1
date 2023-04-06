@@ -14,7 +14,7 @@ Set-Alias -Name "ps"    -Value Get-Process
 Set-Alias -Name "kill"  -Value Stop-Process
 function ls() {
     Get-ChildItem $args
-    | Format-Table -Property Name, Size, UnixMode, FullName, Extension
+    | Select-Object -Property Name, Size, UnixMode, FullName, Extension
 }
 function lsr {
     Get-ChildItem -Recurse $args | ForEach-Object{$_.FullName}
