@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Types>
+    <Type>
+        <Name>System.IO.DirectoryInfo</Name>
+        <Members>
+            <ScriptProperty>
+                <Name>Size</Name>
+                <GetScriptBlock>
+             switch($this.length) {
+               { $_ -gt 1tb } 
+                      { &quot;{0:n2} TB&quot; -f ($_ / 1tb); return; }
+               { $_ -gt 1gb } 
+                      { &quot;{0:n2} GB&quot; -f ($_ / 1gb); return; }
+               { $_ -gt 1mb } 
+                      { &quot;{0:n2} MB&quot; -f ($_ / 1mb); return; }
+               { $_ -gt 1kb } 
+                      { &quot;{0:n2} KB&quot; -f ($_ / 1Kb); return; }
+               default  
+                      { &quot;{0}  B&quot; -f $_} 
+             }      
+                </GetScriptBlock>
+            </ScriptProperty>
+        </Members>
+    </Type>
+    <Type>
+        <Name>System.IO.FileInfo</Name>
+        <Members>
+            <ScriptProperty>
+                <Name>Size</Name>
+                <GetScriptBlock>
+             switch($this.length) {
+               { $_ -gt 1tb } 
+                      { &quot;{0:n2} TB&quot; -f ($_ / 1tb); return; }
+               { $_ -gt 1gb } 
+                      { &quot;{0:n2} GB&quot; -f ($_ / 1gb); return; }
+               { $_ -gt 1mb } 
+                      { &quot;{0:n2} MB&quot; -f ($_ / 1mb); return; }
+               { $_ -gt 1kb } 
+                      { &quot;{0:n2} KB&quot; -f ($_ / 1Kb); return; }
+               default  
+                      { &quot;{0}  B&quot; -f $_} 
+             }      
+                </GetScriptBlock>
+            </ScriptProperty>
+        </Members>
+    </Type>
+    <Type>
+        <Name>System.IO.FileInfo</Name>
+        <Members>
+            <ScriptProperty>
+                <Name>LastWriteTime</Name>
+                <GetScriptBlock>
+                    $temp = $this.LastWriteTimeUtc.ToLocalTime();
+                    switch($temp.Year) {
+                        { $_ -eq (Get-Date).Year } { $temp.ToString(&quot;MM-dd&quot;); return; }
+                        default { $temp.ToString(&quot;yyyy-MM-dd&quot;); return; }
+                    }
+                </GetScriptBlock>
+            </ScriptProperty>
+        </Members>
+    </Type>
+    <Type>
+        <Name>System.IO.DirectoryInfo</Name>
+        <Members>
+            <ScriptProperty>
+                <Name>LastWriteTime</Name>
+                <GetScriptBlock>
+                    $temp = $this.LastWriteTimeUtc.ToLocalTime();
+                    switch($temp.Year) {
+                        { $_ -eq (Get-Date).Year } { $temp.ToString(&quot;MM-dd&quot;); return; }
+                        default { $temp.ToString(&quot;yyyy-MM-dd&quot;); return; }
+                    }
+                </GetScriptBlock>
+            </ScriptProperty>
+        </Members>
+    </Type>
+</Types>
