@@ -70,7 +70,4 @@ setupFormatting;
 
 # --- some configs
 
-function source([string]$envname){
-    ./"$envname"/bin/Activate.ps1
-}
 

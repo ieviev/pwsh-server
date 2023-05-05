@@ -138,3 +138,26 @@ function concat
     $output = $input | Join-String -Separator "$sep"
     return $output
 }
+
+
+## source python env convenience function
+function source
+{
+    [OutputType([System.String])]
+    Param (
+        [parameter(Mandatory=$false, ValueFromPipeline=$false, Position=0)]
+        [System.String]
+        $envname
+    )
+    if ("$envname" -ne "" ) {
+        ./"$envname"/bin/Activate.ps1
+    }
+    else {
+        ./env/bin/Activate.ps1
+    }
+    $output = $input | Join-String -Separator "$sep"
+    return $output
+}
+
+
+
