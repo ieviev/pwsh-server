@@ -150,7 +150,7 @@ function source
         $envname
     )
     if ("$envname" -ne "" ) {
-        ./"$envname"/bin/Activate.ps1
+        &"./$envname/bin/Activate.ps1"
     }
     else {
         ./env/bin/Activate.ps1
