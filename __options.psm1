@@ -1,6 +1,7 @@
-Set-PSReadLineOption -CompletionQueryItems 100
+Set-PSReadLineOption -CompletionQueryItems 1000
 Set-PSReadLineOption -PredictionSource History
 Set-PSReadLineOption -HistorySavePath ~/.bash_history
+Set-PSReadLineOption -MaximumHistoryCount 999999
 
 function prompt {
     Write-Host  "$(Get-Location)" -ForegroundColor Green
@@ -46,19 +47,19 @@ function SetupKeybinds() {
 
     #// some common pipes 
     # filter / alt + shift + l
-    Set-PSReadLineKeyHandler -Chord 'alt+l' -ScriptBlock { 
+    Set-PSReadLineKeyHandler -Chord 'alt+L' -ScriptBlock { 
         psCursorEnd;
         psPaste('| ?{ $_. }')
         psCursorLeft(2);
     }
     # map / alt + shift + m
-    Set-PSReadLineKeyHandler -Chord 'alt+m' -ScriptBlock { 
+    Set-PSReadLineKeyHandler -Chord 'alt+M' -ScriptBlock { 
         psCursorEnd;
         psPaste('| %{ $_. }')
         psCursorLeft(2);
     }
-    # match input with regex
-    Set-PSReadLineKeyHandler -Chord 'alt+L' -ScriptBlock { 
+    # match input with regex 
+    Set-PSReadLineKeyHandler -Chord 'alt+N' -ScriptBlock { 
         psPaste '-match ""' 
         psCursorLeft(1);
     }
@@ -66,6 +67,15 @@ function SetupKeybinds() {
     Set-PSReadLineKeyHandler -Chord 'ctrl+Oem5' -ScriptBlock { 
         psCursorEnd;
         psPaste "```n| "
+    }
+    # disk usage in current dir sorted / alt + shift + D
+    Set-PSReadLineKeyHandler -Chord 'alt+D' -ScriptBlock { 
+        psPaste 'du -sh * | sort -h '
+    }
+    # ls dir
+    Set-PSReadLineKeyHandler -Chord 'alt+l' -ScriptBlock { 
+        psPaste "ls "
+        [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
     }
 
 }
