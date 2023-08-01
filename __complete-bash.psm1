@@ -3,9 +3,6 @@ Register-ArgumentCompleter `
     -Native `
     -CommandName @( 
         "apt",
-        "cp",
-        "mv",
-        "rm",
         "dd", 
         "docker",
         "du", 
