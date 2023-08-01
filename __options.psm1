@@ -11,6 +11,19 @@ function prompt {
 # --- keybinds
 Import-Module $PSScriptRoot/__psapi.psm1
 
+# register keys that pwsh linux wont register to f13-f24
+function SetupFnKeybinds() {
+    Set-PSReadLineKeyHandler -Chord 'F13' -Function SelectBackwardsLine  # Shift+Home
+    Set-PSReadLineKeyHandler -Chord 'F14' -Function SelectLine           # Shift+End
+    # F15 wont be registered
+    # Set-PSReadLineKeyHandler -Chord 'F15' -ScriptBlock { psPaste '%{ $_. } '; psCursorLeft(3) } # Ctrl+m
+    Set-PSReadLineKeyHandler -Chord 'F16' -ScriptBlock { psPaste '%{ $_. } '; psCursorLeft(3) } # Ctrl+m
+    Set-PSReadLineKeyHandler -Chord 'F17' -ScriptBlock { psPaste '%{ $_. } '; psCursorLeft(3) } # Ctrl+m
+    Set-PSReadLineKeyHandler -Chord 'F18' -ScriptBlock { psPaste '%{ $_. } '; psCursorLeft(3) } # Ctrl+m
+}
+
+SetupFnKeybinds;
+
 function SetupKeybinds() {
     Set-PSReadLineKeyHandler -Chord 'Alt+s' -Function AcceptNextSuggestionWord
     Set-PSReadLineKeyHandler -Chord 'Alt+x' -Function HistorySearchForward
@@ -22,13 +35,14 @@ function SetupKeybinds() {
     Set-PSReadLineKeyHandler -Chord 'Ctrl+RightArrow' -Function ShellForwardWord
     Set-PSReadLineKeyHandler -Chord 'Ctrl+Shift+LeftArrow' -Function SelectShellBackwardWord
     Set-PSReadLineKeyHandler -Chord 'Ctrl+Shift+RightArrow' -Function SelectShellForwardWord
-    Set-PSReadLineKeyHandler -Chord 'F11' -Function SelectBackwardsLine
     Set-PSReadLineKeyHandler -Chord 'F12' -Function MenuComplete
-    Set-PSReadLineKeyHandler -Chord 'Shift+End' -Function SelectShellForwardWord
-    Set-PSReadLineKeyHandler -Chord 'Shift+Home' -Function SelectBackwardsLine
+    Set-PSReadLineKeyHandler -Chord 'F9' -Function SelectLine
     Set-PSReadLineKeyHandler -Chord "Alt+Enter" -ScriptBlock { [Microsoft.PowerShell.PSConsoleReadLine]::AcceptSuggestion() }
     Set-PSReadLineKeyHandler -Chord 'Ctrl+F5' -ScriptBlock { psPaste 'git clone ' }
     Set-PSReadLineKeyHandler -Chord 'Ctrl+F8' -ScriptBlock { psPaste 'du -sh * | sort -h ' }
+    
+    Set-PSReadLineKeyHandler -Chord 'Ctrl+UpArrow' -ScriptBlock { psCursorPrevPipeStart; }
+    Set-PSReadLineKeyHandler -Chord 'Ctrl+DownArrow' -ScriptBlock { psCursorNextPipeStart; }
 
     #// some common pipes 
     # filter / alt + shift + l
@@ -43,9 +57,15 @@ function SetupKeybinds() {
         psPaste('| %{ $_. }')
         psCursorLeft(2);
     }
+    # match input with regex
     Set-PSReadLineKeyHandler -Chord 'alt+L' -ScriptBlock { 
         psPaste '-match ""' 
         psCursorLeft(1);
+    }
+    # ctrl + \ to pipe
+    Set-PSReadLineKeyHandler -Chord 'ctrl+Oem5' -ScriptBlock { 
+        psCursorEnd;
+        psPaste "```n| "
     }
 
 }

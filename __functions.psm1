@@ -5,10 +5,34 @@ function ls()
     Param (
         [parameter(Mandatory=$false)]
         [System.String]
-        $args
+        $args,
+        [parameter(Mandatory=$false)]
+        [switch]
+        $l,
+        [parameter(Mandatory=$false)]
+        [switch]
+        $la
     )
-    $items = Get-ChildItem $args # | Sort-Object -Property Name 
-    return $items
+    if ($la) {
+        if ($args.Length -eq 0) {
+            /usr/bin/ls -la    
+        }
+        else {
+            /usr/bin/ls -la "$args"
+        }
+    }
+    elseif ($l) {
+        if ($args.Length -eq 0) {
+            /usr/bin/ls -l
+        }
+        else {
+            /usr/bin/ls -l "$args"
+        }
+    }
+    else {
+        Get-ChildItem $args # | Sort-Object -Property Name 
+    }
+    
 }
 
 # ls files
@@ -85,13 +109,13 @@ function cpv()
 {   
     Param (
         [parameter(Mandatory=$true, ValueFromPipeline=$true)]
-        [System.String]
+        [psobject]
         $source,
         [parameter(Mandatory=$true, ValueFromPipeline=$false, Position=1)]
         [System.String]
         $dest
     )
-    Copy-Item -Path $source -Destination $dest -Verbose
+    $source | Copy-Item -Destination $dest -Verbose
     return $items
 }
 
@@ -139,8 +163,23 @@ function concat
     return $output
 }
 
+## merge files to one ex. ls *.txt | merge combined.txt 
+function merge
+{
+    Param (
+        [parameter(Mandatory=$false, ValueFromPipeline=$false, Position=0)]
+        [System.String]
+        $outputFile,
+        [parameter(Mandatory=$true, ValueFromPipeline=$true, Position=1)]
+        [psobject]
+        $inputFiles
+    )
+    $input | get-content | set-content $outputFile
+    return $output
+}
 
-## source python env convenience function
+
+## source python env by name ex. 'source venv'
 function source
 {
     [OutputType([System.String])]
@@ -160,4 +199,77 @@ function source
 }
 
 
+# TODO:
+# function replaceInFile
+# {
+#     [OutputType([System.String])]
+#     Param (
+#         [parameter(Mandatory=$false, ValueFromPipeline=$false, Position=0)]
+#         [System.String]
+#         $pattern,
+#         [parameter(Mandatory=$false, ValueFromPipeline=$false, Position=1)]
+#         [System.String]
+#         $replacement,
+#         [parameter(Mandatory=$true, ValueFromPipeline=$true)]
+#         [psobject]
+#         $inputFilePath
+#     )
+#     $output = $input | Join-String -Separator "$sep"
+#     return $output
+# }
 
+## count of lines in file
+function lines
+{
+    [OutputType([System.Int32])]
+    Param (
+        [parameter(Mandatory=$false, ValueFromPipeline=$true, Position=0)]
+        [psobject]
+        $filePath
+    )
+    return (get-content $filePath).Length
+}
+
+function sum {
+    BEGIN { $x = 0 }
+    PROCESS { $x += $_ }
+    END { $x }
+}
+
+function count {
+    BEGIN { $x = 0 }
+    PROCESS { $x += 1 }
+    END { $x }
+}
+
+function average {
+    BEGIN { $max = 0; $curr = 0 }
+    PROCESS { $max += $_; $curr += 1 }
+    END { $max / $curr }
+}
+
+# behave like a grep command
+# but work on objects, used
+# to be still be allowed to use grep
+filter match( $reg ) {
+    if ($_.tostring() -match $reg)
+    { $_ }
+}
+
+# behave like a grep -v command
+# but work on objects
+filter exclude( $reg ) {
+    if (-not ($_.tostring() -match $reg))
+    { $_ }
+}
+
+# behave like match but use only -like
+filter like( $glob ) {
+    if ($_.toString() -like $glob)
+    { $_ }
+}
+
+filter unlike( $glob ) {
+    if (-not ($_.tostring() -like $glob))
+    { $_ }
+}
