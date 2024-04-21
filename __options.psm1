@@ -68,7 +68,7 @@ SetupKeybinds;
 # updates 
 function update-pwsh {
     Set-location ~/.config/powershell
-    git pull
+    git pull --rebase
 }
 
 
