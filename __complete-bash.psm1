@@ -23,7 +23,8 @@ Register-ArgumentCompleter `
         "scp", 
         "ssh",
         "systemctl", 
-        "tar"
+        "tar",
+        "cargo"
     ) `
     -ScriptBlock {
     param($commandName, [System.Management.Automation.Language.CommandAst] $commandAst, $cursorPosition)

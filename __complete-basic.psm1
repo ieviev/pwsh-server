@@ -43,8 +43,8 @@ Register-ArgumentCompleter `
     "srun", 
     "salloc", 
     "nvidia-smi", 
-    "update-alternatives",
-    "cargo"
+    "update-alternatives"
+    
     ) `
     -ScriptBlock {
     param($wordToComplete, [Language.CommandAst] $commandAst, $cursorPosition)

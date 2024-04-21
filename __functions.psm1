@@ -11,9 +11,15 @@ function ls()
         $l,
         [parameter(Mandatory=$false)]
         [switch]
-        $la
+        $la,
+        [parameter(Mandatory=$false)]
+        [switch]
+        $h
     )
-    if ($la) {
+    if ($h) {
+        Get-ChildItem -help
+    }
+    elseif ($la) {
         if ($args.Length -eq 0) {
             /usr/bin/ls -la    
         }
@@ -30,7 +36,13 @@ function ls()
         }
     }
     else {
-        Get-ChildItem $args # | Sort-Object -Property Name 
+        if ($args.Length -eq 0) {
+            Get-ChildItem  # | Sort-Object -Property Name 
+        }
+        else {
+            Get-ChildItem -Path "$args" # | Sort-Object -Property Name 
+        }
+        
     }
     
 }
