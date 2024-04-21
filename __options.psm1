@@ -74,7 +74,8 @@ function update-pwsh {
 
 # --- editor
 function e(){
-    emacsclient --alternate-editor="" -t -nw $args
+    ## emacsclient --alternate-editor="" -t -nw $args
+    emacs -t -nw $args
 }
 
 # --- environment
