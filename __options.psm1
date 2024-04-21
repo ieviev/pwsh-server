@@ -11,7 +11,7 @@ $PSDefaultParameterValues['Out-Default:OutVariable'] = '__'
 
 
 function prompt {
-    Write-Host  "$(Get-Location)" -ForegroundColor Green
+    Write-Host  "$(Get-Location)@$([System.Net.Dns]::GetHostName())" -ForegroundColor Cyan
     "❯ "
 }
 
