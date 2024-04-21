@@ -65,16 +65,22 @@ function SetupKeybinds() {
 
 SetupKeybinds;
 
+# updates 
+function update-pwsh {
+    Set-location ~/.config/powershell
+    git pull
+}
+
+
 # --- editor
 function e(){
     emacsclient -t -nw $args
 }
 
-
-
 # --- environment
 function SetEnvironment(){
     $env:PATH += ":/home/ian/.emacs.d/bin/"
+    $env:PATH += ":/home/ian/.config/emacs/bin/"
     # $env:LD_LIBRARY_PATH += ":$pwd"
 }
 
