@@ -9,7 +9,6 @@ Import-Module $PSScriptRoot/__psapi.psm1
 
 $PSDefaultParameterValues['Out-Default:OutVariable'] = '__'
 
-
 function prompt {
     Write-Host  "$([System.Net.Dns]::GetHostName()):$(Get-Location)" -ForegroundColor Cyan
     "❯ "
@@ -66,8 +65,16 @@ function SetupKeybinds() {
 
 SetupKeybinds;
 
+# --- editor
+function e(){
+    emacsclient -t -nw $args
+}
+
+
+
 # --- environment
 function SetEnvironment(){
+    $env:PATH += ":/home/ian/.emacs.d/bin/"
     # $env:LD_LIBRARY_PATH += ":$pwd"
 }
 
