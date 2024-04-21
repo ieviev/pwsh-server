@@ -1,4 +1,5 @@
 Import-Module pscomplete
+$PsCompleteSettings.TopRightHUDEnabled = $true;
 # --- load options
 Import-Module "$PSScriptRoot/__options.psm1"
 # --- parse some completions with regex

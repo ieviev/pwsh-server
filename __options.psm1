@@ -8,7 +8,7 @@ Set-PSReadLineOption -Colors @{ InlinePrediction = [System.ConsoleColor]::DarkGr
 Import-Module $PSScriptRoot/__psapi.psm1
 
 $PSDefaultParameterValues['Out-Default:OutVariable'] = '__'
-$PsCompleteSettings.TopRightHUDEnabled = $true;
+
 
 function prompt {
     Write-Host  "$(Get-Location)" -ForegroundColor Green
