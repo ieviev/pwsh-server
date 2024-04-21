@@ -6,7 +6,9 @@ Set-PSReadLineOption -MaximumHistoryCount 999999
 Set-PSReadLineOption -Colors @{ InlinePrediction = [System.ConsoleColor]::DarkGray }
 
 Import-Module $PSScriptRoot/__psapi.psm1
+
 $PSDefaultParameterValues['Out-Default:OutVariable'] = '__'
+$PsCompleteSettings.TopRightHUDEnabled = $true;
 
 function prompt {
     Write-Host  "$(Get-Location)" -ForegroundColor Green
@@ -22,10 +24,6 @@ function SetupFnKeybinds() {
     Set-PSReadLineKeyHandler -Chord 'F13' -Function SelectBackwardsLine  # Shift+Home
     Set-PSReadLineKeyHandler -Chord 'F14' -Function SelectLine           # Shift+End
     # F15 wont be registered
-    # Set-PSReadLineKeyHandler -Chord 'F15' -ScriptBlock { psPaste '%{ $_. } '; psCursorLeft(3) } # Ctrl+m
-    #Set-PSReadLineKeyHandler -Chord 'F16' -ScriptBlock { psPaste '%{ $_. } '; psCursorLeft(3) } # Ctrl+m
-    #Set-PSReadLineKeyHandler -Chord 'F17' -ScriptBlock { psPaste '%{ $_. } '; psCursorLeft(3) } # Ctrl+m
-    #Set-PSReadLineKeyHandler -Chord 'F18' -ScriptBlock { psPaste '%{ $_. } '; psCursorLeft(3) } # Ctrl+m
 }
 
 SetupFnKeybinds;
@@ -45,7 +43,6 @@ function SetupKeybinds() {
     Set-PSReadLineKeyHandler -Chord 'F6' -Function SelectLine
     Set-PSReadLineKeyHandler -Chord 'F12' -Function MenuComplete
     Set-PSReadLineKeyHandler -Chord "Alt+Enter" -ScriptBlock { [Microsoft.PowerShell.PSConsoleReadLine]::AcceptSuggestion() }
-
     Set-PSReadLineKeyHandler -Chord 'Ctrl+F5' -ScriptBlock { psPaste 'git clone ' }
     Set-PSReadLineKeyHandler -Chord 'Ctrl+F8' -ScriptBlock { psPaste 'du -sh * | sort -h ' }
     Set-PSReadLineKeyHandler -Chord 'Ctrl+UpArrow' -ScriptBlock { psCursorPrevPipeStart; }
@@ -77,7 +74,6 @@ function SetEnvironment(){
 SetEnvironment;
 
 # --- load formatting data
-
 function setupFormatting () {
     Update-TypeData -AppendPath "$PSScriptRoot/formatting/FileInfo.ps1xml"
     Update-FormatData -PrependPath "$PSScriptRoot/formatting/ls.Format.ps1xml"
@@ -85,6 +81,5 @@ function setupFormatting () {
 
 setupFormatting;
 
-# --- some configs
 
 
